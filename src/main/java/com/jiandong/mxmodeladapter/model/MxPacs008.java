@@ -5,66 +5,46 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-import com.prowidesoftware.swift.model.mx.dic.ChargeBearerType1Code;
-import com.prowidesoftware.swift.model.mx.dic.SettlementMethod1Code;
+public record MxPacs008(
+		MxHeader mxHeader,
+		String messageId, // "MsgId"
+		OffsetDateTime creationDateTime, // "CreDtTm"
+		String settlementMethod, // "SttlmMtd"
+		List<CreditTransferTransaction> creditTransferTransactions // "CdtTrfTxInf"
+) implements IModel {
 
-public class MxPacs008 extends MxHeader {
-
-	private String messageId; // "MsgId"
-
-	private OffsetDateTime creationDateTime; // "CreDtTm"
-
-	private SettlementMethod1Code settlementMethod; // "SttlmMtd"
-
-	private List<CreditTransferTransaction> creditTransferTransactions; // "CdtTrfTxInf"
-
-	public static class CreditTransferTransaction {
-
-		private String instructionId; // "InstrId"
-
-		private String endToEndId; // "EndToEndId"
-
-		private String uetr; // "UETR"
-
-		private String currency; // "intrBkSttlmAmt/Ccy"
-
-		private BigDecimal settlementAmount; // "intrBkSttlmAmt/Amt"
-
-		private LocalDate settlementDate; // "IntrBkSttlmDt"
-
-		private ChargeBearerType1Code chargeBearerCode; // "ChrgBr"
-
-		private String chargeCurrency; // "ChrgsInf/Amt"
-
-		private BigDecimal chargeAmount; // "ChrgsInf/Amt"
-
-		private String instructingAgentBIC; // "InstgAgt/FinInstnId/BICFI"
-
-		private String instructedAgentBIC; // "InstdAgt/FinInstnId/BICFI"
-
-		private Customer debtorDetails; // "Dbtr"
-
-		private String DebtorAccountId; // "DbtrAcct/Id/"
-
-		private String DebtorAgentBIC; // "DbtrAgt/FinInstnId/BICFI"
-
-		private Customer creditorDetails; // "Cdtr"
-
-		private String creditorAccountId; // "CdtrAcct/Id/"
-
-		private String CreditorAgentBIC; // "CdtrAgt/FinInstnId/BICFI"
+	public record CreditTransferTransaction(
+			String instructionId, // "InstrId"
+			String endToEndId, // "EndToEndId"
+			String uetr, // "UETR"
+			String currency, // "intrBkSttlmAmt/Ccy"
+			BigDecimal settlementAmount, // "intrBkSttlmAmt/Amt"
+			LocalDate settlementDate, // "IntrBkSttlmDt"
+			String chargeBearerCode, // "ChrgBr"
+			List<ChargeInformation> chargeInformation, // "ChrgsInf"
+			String instructingAgentBIC, // "InstgAgt/FinInstnId/BICFI"
+			String instructedAgentBIC, // "InstdAgt/FinInstnId/BICFI"
+			Customer debtorDetails, // "Dbtr"
+			Customer creditorDetails // "Cdtr"
+	) {
 
 	}
 
-	public class Customer {
+	public record ChargeInformation(
+			String chargeCurrency, // "Amt"
+			BigDecimal chargeAmount // "Amt"
+	) {
 
-		private String name; // "Nm"
+	}
 
-		private String townName; // "PstlAdr/TwnNm"
-
-		private String country; // "PstlAdr/Ctry"
-
-		private List<String> addressLine; // "PstlAdr/AdrLine"
+	public record Customer(
+			String accountId,
+			String agentBic,
+			String name, // "Nm"
+			String townName, // "PstlAdr/TwnNm"
+			String country, // "PstlAdr/Ctry"
+			List<String> addressLine // "PstlAdr/AdrLine"
+	) {
 
 	}
 

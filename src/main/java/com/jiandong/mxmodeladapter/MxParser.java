@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.jiandong.mxmodeladapter.converter.ModelConverter;
-import com.jiandong.mxmodeladapter.model.BaseModel;
+import com.jiandong.mxmodeladapter.model.IModel;
 import com.prowidesoftware.swift.model.mx.AbstractMX;
 
 public final class MxParser {
@@ -12,7 +12,7 @@ public final class MxParser {
 	private static final Logger log = Logger.getLogger(MxParser.class.getName());
 
 	@SuppressWarnings("unchecked")
-	public static BaseModel parse(String xml) {
+	public static IModel parse(String xml) {
 		AbstractMX abstractMX = AbstractMX.parse(xml);
 		String messageName = abstractMX.getAppHdr().messageName(); // pacs.008.001.14
 
@@ -20,9 +20,9 @@ public final class MxParser {
 
 		Class<?> converterClass = mxType.getConverterClass();
 
-		ModelConverter<AbstractMX, BaseModel> converter;
+		ModelConverter<AbstractMX, IModel> converter;
 		try {
-			converter = (ModelConverter<AbstractMX, BaseModel>) converterClass.getDeclaredConstructor().newInstance();
+			converter = (ModelConverter<AbstractMX, IModel>) converterClass.getDeclaredConstructor().newInstance();
 		}
 		catch (Exception e) {
 			log.log(Level.SEVERE, "Failed to instantiate converter for message type: " + messageName, e);
