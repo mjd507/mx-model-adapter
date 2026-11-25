@@ -1,2 +1,2 @@
 # mx-model-adapter
-a model adapter for iso20022 messages, based on prowide-iso20022
+a model adapter for iso20022 messages, based on prowide-iso20022 and MapStruct.

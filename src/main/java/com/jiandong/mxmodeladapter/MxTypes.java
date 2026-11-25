@@ -1,38 +1,35 @@
 package com.jiandong.mxmodeladapter;
 
+import java.util.function.Supplier;
+
+import com.jiandong.mxmodeladapter.converter.ModelConverter;
 import com.jiandong.mxmodeladapter.converter.Pacs00800108Converter;
 import com.jiandong.mxmodeladapter.converter.Pacs00800114Converter;
+import org.mapstruct.factory.Mappers;
 
 enum MxTypes {
 
-	PACS00800114("pacs.008.001.14", Pacs00800114Converter.class),
-	PACS008("pacs.008", Pacs00800108Converter.class) // default for pacs.008.*.*
+	PACS00800108("pacs.008.001.08", () -> Mappers.getMapper(Pacs00800108Converter.class)),
+	PACS00800114("pacs.008.001.14", () -> Mappers.getMapper(Pacs00800114Converter.class)),
 	;
 
 	private final String messageName;
 
-	private final Class<?> converterClass;
+	private final Supplier<? extends ModelConverter<?, ?>> converterSupplier;
 
-	MxTypes(String messageName, Class<?> converterClass) {
+	MxTypes(String messageName, Supplier<? extends ModelConverter<?, ?>> converterSupplier) {
 		this.messageName = messageName;
-		this.converterClass = converterClass;
+		this.converterSupplier = converterSupplier;
 	}
 
-	public Class<?> getConverterClass() {
-		return converterClass;
+	public ModelConverter<?, ?> getConverter() {
+		return converterSupplier.get();
 	}
 
 	static MxTypes valueOfMessageName(String messageName) {
 		String messageNameLowerCase = messageName.toLowerCase();
 		for (MxTypes mxType : MxTypes.values()) {
 			if (mxType.messageName.equals(messageNameLowerCase)) {
-				return mxType;
-			}
-		}
-		String[] split = messageNameLowerCase.split("\\.");
-		String simplifiedMessageName = split[0] + "." + split[1];
-		for (MxTypes mxType : MxTypes.values()) {
-			if (mxType.messageName.equals(simplifiedMessageName)) {
 				return mxType;
 			}
 		}

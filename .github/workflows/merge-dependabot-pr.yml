@@ -1,0 +1,9 @@
+name: Merge Dependabot PR
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  auto-merge:
+    uses: Jiandong-Labs/github-workflow/.github/workflows/auto-merge.yml@main

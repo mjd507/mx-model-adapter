@@ -40,6 +40,14 @@
 				<IntrBkSttlmAmt Ccy="JPY">150000</IntrBkSttlmAmt>
 				<IntrBkSttlmDt>2026-11-24</IntrBkSttlmDt>
 				<ChrgBr>SHAR</ChrgBr>
+				<ChrgsInf>
+					<Amt Ccy="JPY">1500</Amt>
+					<Agt>
+						<FinInstnId>
+							<BICFI>BOTKJPJTXXX</BICFI>
+						</FinInstnId>
+					</Agt>
+				</ChrgsInf>
 				<InstgAgt>
 					<FinInstnId>
 						<BICFI>BOTKJPJTXXX</BICFI>
