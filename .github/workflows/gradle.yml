@@ -11,5 +11,8 @@ jobs:
     uses: Jiandong-Labs/github-workflow/.github/workflows/gradle.yml@main
     with:
       run-jacoco-badge: false
+      publish-snapshot: true
     secrets:
       GRADLE_CACHE_ENCRYPTION_KEY: ${{ secrets.GRADLE_CACHE_ENCRYPTION_KEY }}
+      JRELEASER_MAVEN_CENTRAL_USER: ${{ secrets.JRELEASER_MAVEN_CENTRAL_USER }}
+      JRELEASER_MAVEN_CENTRAL_PSWD: ${{ secrets.JRELEASER_MAVEN_CENTRAL_PSWD }}

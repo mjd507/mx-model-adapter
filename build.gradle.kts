@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "io.github.mjd507"
-version = "0.1.0"
+version = "0.1.1-SNAPSHOT"
 description = "a model adapter for iso20022 messages"
 
 java {

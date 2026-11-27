@@ -41,7 +41,7 @@ publishing {
 
 jreleaser {
 	signing {
-		active = 'ALWAYS'
+		active = 'RELEASE'
 		pgp {
 			mode = 'MEMORY'
 			armored = true
@@ -54,9 +54,19 @@ jreleaser {
 			active = 'ALWAYS'
 			mavenCentral {
 				sonatype {
-					active = 'ALWAYS'
+					active = 'RELEASE'
 					url = "https://central.sonatype.com/api/v1/publisher"
+					username = providers.environmentVariable('JRELEASER_MAVEN_CENTRAL_USER')
+					password = providers.environmentVariable('JRELEASER_MAVEN_CENTRAL_PSWD')
+					stagingRepository('build/pre-deploy')
+				}
+			}
+			nexus2 {
+				sonatype {
+					active = 'SNAPSHOT'
+					snapshotUrl = "https://central.sonatype.com/repository/maven-snapshots/"
 					snapshotSupported = true
+					sign = false
 					username = providers.environmentVariable('JRELEASER_MAVEN_CENTRAL_USER')
 					password = providers.environmentVariable('JRELEASER_MAVEN_CENTRAL_PSWD')
 					stagingRepository('build/pre-deploy')
