@@ -1,12 +1,23 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath("org.jreleaser:org.jreleaser.gradle.plugin:1.27.0")
+    }
+}
+
 plugins {
     `java-library`
 }
 
-group = "com.jiandong"
-version = "0.0.1-SNAPSHOT"
-description = "mx-model-adapter"
+group = "io.github.mjd507"
+version = "0.1.0"
+description = "a model adapter for iso20022 messages"
 
 java {
+    withJavadocJar()
+    withSourcesJar()
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
     }
@@ -30,3 +41,5 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+apply(from = "publish-maven.gradle")

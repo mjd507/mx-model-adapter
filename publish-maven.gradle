@@ -1,0 +1,72 @@
+apply plugin: 'maven-publish'
+apply plugin: 'org.jreleaser'
+
+
+publishing {
+	publications {
+		myPub(MavenPublication) {
+			from components.java
+			pom {
+				name = project.name
+				description = project.description
+				url = "https://github.com/mjd507/mx-model-adapter/"
+				licenses {
+					license {
+						name = 'The Apache License, Version 2.0'
+						url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					}
+				}
+				developers {
+					developer {
+						id = 'mjd507'
+						name = 'Jiandong Ma'
+						email = 'jiandong.ma.cn@gmail.com'
+					}
+				}
+				scm {
+					url = 'https://github.com/mjd507/mx-model-adapter/'
+					connection = 'git://github.com/mjd507/mx-model-adapter.git'
+					developerConnection = 'git://github.com/mjd507/mx-model-adapter.git'
+				}
+			}
+		}
+	}
+	repositories {
+		maven {
+			name = 'PreDeploy'
+			url = layout.buildDirectory.dir('pre-deploy')
+		}
+	}
+}
+
+jreleaser {
+	signing {
+		active = 'ALWAYS'
+		pgp {
+			mode = 'MEMORY'
+			armored = true
+			passphrase = providers.environmentVariable('JRELEASER_GPG_PASSPHRASE')
+			secretKey = providers.environmentVariable('JRELEASER_GPG_SECRET_KEY')
+		}
+	}
+	deploy {
+		maven {
+			active = 'ALWAYS'
+			mavenCentral {
+				sonatype {
+					active = 'ALWAYS'
+					url = "https://central.sonatype.com/api/v1/publisher"
+					snapshotSupported = true
+					username = providers.environmentVariable('JRELEASER_MAVEN_CENTRAL_USER')
+					password = providers.environmentVariable('JRELEASER_MAVEN_CENTRAL_PSWD')
+					stagingRepository('build/pre-deploy')
+				}
+			}
+		}
+	}
+	release {
+		github {
+			enabled = false
+		}
+	}
+}

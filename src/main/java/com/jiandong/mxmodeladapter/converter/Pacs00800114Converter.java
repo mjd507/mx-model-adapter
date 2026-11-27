@@ -7,7 +7,6 @@ import com.jiandong.mxmodeladapter.model.MxPacs008;
 import com.prowidesoftware.swift.model.mx.AppHdr;
 import com.prowidesoftware.swift.model.mx.MxPacs00800114;
 import com.prowidesoftware.swift.model.mx.dic.BranchAndFinancialInstitutionIdentification8;
-import com.prowidesoftware.swift.model.mx.dic.CashAccount38;
 import com.prowidesoftware.swift.model.mx.dic.CashAccount40;
 import com.prowidesoftware.swift.model.mx.dic.Charges16;
 import com.prowidesoftware.swift.model.mx.dic.CreditTransferTransaction73;
